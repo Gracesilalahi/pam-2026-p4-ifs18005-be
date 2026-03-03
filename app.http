@@ -1,0 +1,204 @@
+## Global Variabel
+@BaseUrl = https://pam-2026-p4-ifs23046-be.delcom.org:8080
+#@BaseUrl = http://127.0.0.1:8000
+
+## Profile
+## ===========================================
+
+### Mengambil semua data profil
+# @name GetProfile
+GET {{BaseUrl}}/profile
+Content-Type: application/json
+
+### Mengambil photo profil
+# @name GetProfilePhoto
+GET {{BaseUrl}}/profile/photo
+Content-Type: application/json
+
+
+## Plants
+## ===========================================
+
+### Mengambil semua data tumbuhan
+# @name GetAllPlants
+GET {{BaseUrl}}/plants?search=
+Content-Type: application/json
+
+### Menambahkan data tumbuhan baru
+# @name PostPlants
+POST {{BaseUrl}}/plants
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="nama"
+
+Kangkung
+--WebAppBoundary
+Content-Disposition: form-data; name="deskripsi"
+
+Brokoli adalah sayuran hijau yang kaya vitamin, mineral, dan serat
+--WebAppBoundary
+Content-Disposition: form-data; name="manfaat"
+
+Membantu detoksifikasi dan menjaga kesehatan mata
+--WebAppBoundary
+Content-Disposition: form-data; name="efekSamping"
+
+Dapat menyebabkan kembung
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="example.png"
+Content-Type: image/png
+
+< ./example.png
+--WebAppBoundary--
+
+> {%
+    client.global.set("plantId", response.body.data.plantId);
+    console.log(client.global.get("plantId"))
+%}
+
+### Mengambil data tumbuhan berdasarkan id-nya
+# @name GetPlantById
+GET {{BaseUrl}}/plants/{{plantId}}
+Content-Type: application/json
+
+### Melihat gambar tumbuhan
+# @name GetPlantImageById
+GET {{BaseUrl}}/plants/{{plantId}}/image
+Content-Type: application/json
+
+### Mengubah hanya data plant berdasarkan id-nya
+# @name PutPlantOnlyData
+PUT {{BaseUrl}}/plants/{{plantId}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="nama"
+
+Brokoli Update
+--WebAppBoundary
+Content-Disposition: form-data; name="deskripsi"
+
+Brokoli adalah sayuran hijau yang kaya vitamin, mineral, dan serat
+--WebAppBoundary
+Content-Disposition: form-data; name="manfaat"
+
+Membantu detoksifikasi dan menjaga kesehatan mata
+--WebAppBoundary
+Content-Disposition: form-data; name="efekSamping"
+
+Dapat menyebabkan kembung
+--WebAppBoundary--
+
+### Menghapus data plant berdasarkan id-nya
+# @name DeletePlant
+DELETE {{BaseUrl}}/plants/{{plantId}}
+Content-Type: application/json
+
+
+## Dolls (Versi Boneka)
+## ===========================================
+
+### Mengambil semua data boneka
+# @name GetAllDolls
+GET {{BaseUrl}}/dolls?search=
+Content-Type: application/json
+
+### Menambahkan data boneka baru
+# @name PostDolls
+POST {{BaseUrl}}/dolls
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="nama"
+
+Labubu The Monsters
+--WebAppBoundary
+Content-Disposition: form-data; name="deskripsi"
+
+Boneka koleksi populer dari Pop Mart dengan desain monster yang unik dan menggemaskan.
+--WebAppBoundary
+Content-Disposition: form-data; name="merk"
+
+Pop Mart
+--WebAppBoundary
+Content-Disposition: form-data; name="material"
+
+Plush & Vinyl
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="doll_example.png"
+Content-Type: image/png
+
+< ./example.png
+--WebAppBoundary--
+
+> {%
+    client.global.set("dollId", response.body.data.dollId);
+    console.log(client.global.get("dollId"))
+%}
+
+### Mengambil data boneka berdasarkan id
+# @name GetDollById
+GET {{BaseUrl}}/dolls/{{dollId}}
+Content-Type: application/json
+
+### Melihat gambar boneka
+# @name GetDollImageById
+GET {{BaseUrl}}/dolls/{{dollId}}/image
+Content-Type: application/json
+
+### Mengubah data boneka (tanpa ganti gambar)
+# @name PutDollOnlyData
+PUT {{BaseUrl}}/dolls/{{dollId}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="nama"
+
+Labubu Update
+--WebAppBoundary
+Content-Disposition: form-data; name="deskripsi"
+
+Edisi terbatas dengan kostum baru.
+--WebAppBoundary
+Content-Disposition: form-data; name="merk"
+
+Pop Mart
+--WebAppBoundary
+Content-Disposition: form-data; name="material"
+
+Plush / Kain Lembut
+--WebAppBoundary--
+
+### Mengubah gambar dan data boneka
+# @name PutDoll
+PUT {{BaseUrl}}/dolls/{{dollId}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="nama"
+
+Labubu Premium
+--WebAppBoundary
+Content-Disposition: form-data; name="deskripsi"
+
+Deskripsi terbaru untuk boneka premium.
+--WebAppBoundary
+Content-Disposition: form-data; name="merk"
+
+Pop Mart Special
+--WebAppBoundary
+Content-Disposition: form-data; name="material"
+
+Silicone & Plush
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="new_doll.png"
+Content-Type: image/png
+
+< ./example.png
+--WebAppBoundary--
+
+### Menghapus data boneka berdasarkan id
+# @name DeleteDoll
+DELETE {{BaseUrl}}/dolls/{{dollId}}
+Content-Type: application/json
